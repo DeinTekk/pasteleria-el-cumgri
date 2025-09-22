@@ -119,6 +119,44 @@
         .btn-edit { background-color: #4CAF50; color: white; }
         .btn-delete { background-color: #f44336; color: white; }
         .btn-add { margin-bottom: 20px; }
+        
+        /* Estilos para el formulario de añadir producto */
+        .add-product-form-container {
+            display: none; /* Oculto por defecto */
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+        .add-product-form-container h3 {
+            color: var(--color-chocolate);
+            margin-bottom: 15px;
+        }
+        .add-product-form-container .form-group {
+            margin-bottom: 15px;
+        }
+        .add-product-form-container label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .add-product-form-container input[type="text"],
+        .add-product-form-container input[type="number"],
+        .add-product-form-container textarea,
+        .add-product-form-container select {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .add-product-form-container .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -135,7 +173,57 @@
         </aside>
         <main class="admin-content">
             <h1>Gestión de Productos</h1>
-            <button class="btn btn-primary btn-add">Añadir Nuevo Producto</button>
+            <button class="btn btn-primary btn-add" id="btnAddProduct">Añadir Nuevo Producto</button>
+            
+            <!-- Formulario para añadir/editar producto -->
+            <div class="add-product-form-container" id="productFormContainer">
+                <h3>Añadir/Editar Producto</h3>
+                <form id="productForm">
+                    <div class="form-group">
+                        <label for="productId">ID</label>
+                        <input type="number" id="productId" name="id" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="productName">Nombre *</label>
+                        <input type="text" id="productName" name="nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="productCategory">Categoría *</label>
+                        <select id="productCategory" name="categoria" required>
+                            <option value="">Seleccione una categoría</option>
+                            <option value="Tortas Cuadradas">Tortas Cuadradas</option>
+                            <option value="Tortas Circulares">Tortas Circulares</option>
+                            <option value="Postres Individuales">Postres Individuales</option>
+                            <option value="Productos Veganos">Productos Veganos</option>
+                            <option value="Productos Sin Azúcar">Productos Sin Azúcar</option>
+                            <option value="Pastelería Tradicional">Pastelería Tradicional</option>
+                            <option value="Productos sin gluten">Productos sin gluten</option>
+                            <option value="Tortas Especiales">Tortas Especiales</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="productPrice">Precio *</label>
+                        <input type="number" id="productPrice" name="precio" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="productStock">Stock *</label>
+                        <input type="number" id="productStock" name="stock" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="productImage">Imagen (nombre de archivo, ej: torta-chocolate.jpg)</label>
+                        <input type="text" id="productImage" name="imagen">
+                    </div>
+                    <div class="form-group">
+                        <label for="productDescription">Descripción</label>
+                        <textarea id="productDescription" name="descripcion" rows="3"></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Guardar Producto</button>
+                        <button type="button" class="btn btn-secondary" id="btnCancelProduct">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+
             <div class="admin-card">
                 <h3>Listado de Productos</h3>
                 <table class="product-table">
@@ -166,6 +254,10 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const productTableBody = document.getElementById("productTableBody");
+            const btnAddProduct = document.getElementById("btnAddProduct");
+            const productFormContainer = document.getElementById("productFormContainer");
+            const productForm = document.getElementById("productForm");
+            const btnCancelProduct = document.getElementById("btnCancelProduct");
 
             // Función para cargar productos en la tabla
             function loadProducts() {
@@ -174,20 +266,58 @@
                     const row = productTableBody.insertRow();
                     row.innerHTML = `
                         <td>${product.id}</td>
-                        <td><img src="../images/${product.imagen}" alt="${product.nombre}"></td>
+                        <td><img src="../images/${product.imagen || 'placeholder.jpg'}" alt="${product.nombre}"></td>
                         <td>${product.nombre}</td>
                         <td>${product.categoria}</td>
                         <td>$${product.precio.toLocaleString("es-CL")}</td>
                         <td>${product.stock}</td>
                         <td>
-                            <button class="btn-action btn-edit">Editar</button>
-                            <button class="btn-action btn-delete">Eliminar</button>
+                            <button class="btn-action btn-edit" data-id="${product.id}">Editar</button>
+                            <button class="btn-action btn-delete" data-id="${product.id}">Eliminar</button>
                         </td>
                     `;
                 });
             }
 
-            loadProducts();
+            // Mostrar/Ocultar formulario al hacer clic en 'Añadir Nuevo Producto'
+            btnAddProduct.addEventListener("click", function() {
+                productFormContainer.style.display = "block";
+                productForm.reset(); // Limpiar formulario
+                document.getElementById('productId').value = ''; // Asegurar que el ID esté vacío para nuevo producto
+            });
+
+            // Ocultar formulario al hacer clic en 'Cancelar'
+            btnCancelProduct.addEventListener("click", function() {
+                productFormContainer.style.display = "none";
+            });
+
+            // Manejar el envío del formulario
+            productForm.addEventListener("submit", function(event) {
+                event.preventDefault();
+
+                const formData = new FormData(productForm);
+                const newProduct = {};
+                for (let [key, value] of formData.entries()) {
+                    newProduct[key] = value;
+                }
+
+                // Generar un ID único para el nuevo producto
+                if (!newProduct.id) {
+                    newProduct.id = productos.length > 0 ? Math.max(...productos.map(p => p.id)) + 1 : 1;
+                }
+                newProduct.precio = parseFloat(newProduct.precio);
+                newProduct.stock = parseInt(newProduct.stock);
+
+                // Añadir el nuevo producto a la lista (simulado)
+                productos.push(newProduct);
+                
+                // Recargar la tabla y ocultar el formulario
+                loadProducts();
+                productFormContainer.style.display = "none";
+                alert("Producto guardado exitosamente!");
+            });
+
+            loadProducts(); // Cargar productos al iniciar la página
         });
     </script>
 </body>
