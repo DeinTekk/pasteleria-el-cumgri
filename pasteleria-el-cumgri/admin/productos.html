@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Productos - Admin PASTELERIA EL CUMGRI</title>
+    <meta name="description" content="Panel de administración para la gestión de productos de PASTELERIA EL CUMGRI.">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <style>
+        body {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+        .admin-container {
+            display: flex;
+            flex: 1;
+            max-width: 1200px;
+            margin: 20px auto;
+            background-color: var(--color-crema);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .admin-sidebar {
+            width: 250px;
+            background-color: var(--color-chocolate);
+            color: white;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .admin-sidebar h2 {
+            color: white;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .admin-sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        .admin-sidebar ul li {
+            margin-bottom: 15px;
+        }
+        .admin-sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1em;
+            display: block;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .admin-sidebar ul li a:hover,
+        .admin-sidebar ul li a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .admin-content {
+            flex: 1;
+            padding: 30px;
+            background-color: var(--color-crema);
+        }
+        .admin-content h1 {
+            color: var(--color-chocolate);
+            margin-bottom: 20px;
+        }
+        .admin-card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+        .admin-card h3 {
+            color: var(--color-rosa-suave);
+            margin-bottom: 15px;
+        }
+        .admin-card p {
+            line-height: 1.6;
+        }
+        .admin-footer {
+            text-align: center;
+            padding: 20px;
+            background-color: var(--color-chocolate);
+            color: white;
+            margin-top: auto;
+        }
+        .product-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .product-table th, .product-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .product-table th {
+            background-color: var(--color-rosa-suave);
+            color: white;
+        }
+        .product-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .product-table img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        .btn-action {
+            padding: 5px 10px;
+            margin-right: 5px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn-edit { background-color: #4CAF50; color: white; }
+        .btn-delete { background-color: #f44336; color: white; }
+        .btn-add { margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <aside class="admin-sidebar">
+            <h2>Panel de Administración</h2>
+            <ul>
+                <li><a href="index.html">Dashboard</a></li>
+                <li><a href="productos.html" class="active">Gestión de Productos</a></li>
+                <li><a href="usuarios.html">Gestión de Usuarios</a></li>
+                <li><a href="pedidos.html">Gestión de Pedidos</a></li>
+                <li><a href="../index.html">Volver a la Tienda</a></li>
+            </ul>
+        </aside>
+        <main class="admin-content">
+            <h1>Gestión de Productos</h1>
+            <button class="btn btn-primary btn-add">Añadir Nuevo Producto</button>
+            <div class="admin-card">
+                <h3>Listado de Productos</h3>
+                <table class="product-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Imagen</th>
+                            <th>Nombre</th>
+                            <th>Categoría</th>
+                            <th>Precio</th>
+                            <th>Stock</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productTableBody">
+                        <!-- Los productos se cargarán dinámicamente aquí -->
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <footer class="admin-footer">
+        <p>&copy; 2024 PASTELERIA EL CUMGRI - Panel de Administración</p>
+    </footer>
+
+    <script src="../data/productos.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const productTableBody = document.getElementById("productTableBody");
+
+            // Función para cargar productos en la tabla
+            function loadProducts() {
+                productTableBody.innerHTML = ""; // Limpiar tabla
+                productos.forEach(product => {
+                    const row = productTableBody.insertRow();
+                    row.innerHTML = `
+                        <td>${product.id}</td>
+                        <td><img src="../images/${product.imagen}" alt="${product.nombre}"></td>
+                        <td>${product.nombre}</td>
+                        <td>${product.categoria}</td>
+                        <td>$${product.precio.toLocaleString("es-CL")}</td>
+                        <td>${product.stock}</td>
+                        <td>
+                            <button class="btn-action btn-edit">Editar</button>
+                            <button class="btn-action btn-delete">Eliminar</button>
+                        </td>
+                    `;
+                });
+            }
+
+            loadProducts();
+        });
+    </script>
+</body>
+</html>
+
