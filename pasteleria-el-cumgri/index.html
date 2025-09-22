@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PASTELERIA EL CUMGRI - Rellenos con amor "Secretos de Bolivia"</title>
+    <meta name="description" content="Pastelería boliviana con tradición y calidad. Tortas, postres y productos de repostería con los auténticos sabores de Bolivia.">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <a href="index.html" class="logo">
+                <h1>PASTELERIA EL CUMGRI</h1>
+                <span class="logo-subtitle">Rellenos con amor "Secretos de Bolivia"</span>
+            </a>
+            
+            <ul class="nav-menu">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="productos.html">Productos</a></li>
+                <li><a href="nosotros.html">Nosotros</a></li>
+                <li><a href="blogs.html">Blogs</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <a href="login.html" class="btn btn-secondary">Iniciar Sesión</a>
+                <a href="registro.html" class="btn btn-primary">Registrarse</a>
+                <div class="cart-icon" onclick="toggleCart()">
+                    🛒
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Bienvenidos a PASTELERIA EL CUMGRI</h1>
+                <p class="hero-subtitle">Rellenos con amor "Secretos de Bolivia"</p>
+                <p class="hero-description">
+                    Descubre los auténticos sabores de Bolivia en cada bocado. Nuestra pastelería combina 
+                    tradición familiar con ingredientes de la más alta calidad para crear experiencias 
+                    dulces inolvidables. Desde tortas artesanales hasta postres tradicionales bolivianos, 
+                    cada producto está hecho con amor y dedicación.
+                </p>
+                <a href="productos.html" class="btn btn-primary">Ver Productos</a>
+            </div>
+            <div class="hero-image">
+                <img src="images/hero-bolivian-cake.gif" alt="Torta tradicional boliviana" />
+            </div>
+        </div>
+    </section>
+
+    <!-- Productos Destacados -->
+    <section class="section">
+        <h2 class="section-title">Productos Destacados</h2>
+        <div class="productos-grid" id="productosDestacados">
+            <!-- Los productos se cargarán dinámicamente con JavaScript -->
+        </div>
+        <div class="text-center mt-2">
+            <a href="productos.html" class="btn btn-primary">Ver Todos los Productos</a>
+        </div>
+    </section>
+
+    <!-- Categorías -->
+    <section class="section">
+        <h2 class="section-title">Nuestras Especialidades</h2>
+        <div class="productos-grid">
+            <div class="producto-card">
+                <img src="images/torta-chocolate.jpg" alt="Tortas Cuadradas" class="producto-imagen">
+                <div class="producto-info">
+                    <h3 class="producto-nombre">Tortas Cuadradas</h3>
+                    <p class="producto-descripcion">Deliciosas tortas cuadradas perfectas para celebraciones especiales.</p>
+                    <a href="productos.html?categoria=Tortas Cuadradas" class="btn btn-secondary">Ver Categoría</a>
+                </div>
+            </div>
+            
+            <div class="producto-card">
+                <img src="images/pasteles-bolivianos.jpg" alt="Tortas Circulares" class="producto-imagen">
+                <div class="producto-info">
+                    <h3 class="producto-nombre">Tortas Circulares</h3>
+                    <p class="producto-descripcion">Tortas tradicionales con los auténticos sabores bolivianos.</p>
+                    <a href="productos.html?categoria=Tortas Circulares" class="btn btn-secondary">Ver Categoría</a>
+                </div>
+            </div>
+            
+            <div class="producto-card">
+                <img src="images/postres-individuales.jpg" alt="Postres Individuales" class="producto-imagen">
+                <div class="producto-info">
+                    <h3 class="producto-nombre">Postres Individuales</h3>
+                    <p class="producto-descripcion">Pequeños placeres perfectos para cualquier momento del día.</p>
+                    <a href="productos.html?categoria=Postres Individuales" class="btn btn-secondary">Ver Categoría</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Información Adicional -->
+    <section class="section">
+        <h2 class="section-title">¿Por qué elegir PASTELERIA EL CUMGRI?</h2>
+        <div class="productos-grid">
+            <div class="producto-card">
+                <div class="producto-info">
+                    <h3 class="producto-nombre">Tradición Boliviana</h3>
+                    <p class="producto-descripcion">
+                        Recetas familiares transmitidas de generación en generación, 
+                        manteniendo vivos los sabores auténticos de Bolivia.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="producto-card">
+                <div class="producto-info">
+                    <h3 class="producto-nombre">❤️ Hecho con Amor</h3>
+                    <p class="producto-descripcion">
+                        Cada producto es elaborado artesanalmente con ingredientes 
+                        de primera calidad y mucho cariño en cada detalle.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="producto-card">
+                <div class="producto-info">
+                    <h3 class="producto-nombre">🎂 Personalización</h3>
+                    <p class="producto-descripcion">
+                        Personalizamos tus tortas con mensajes especiales para 
+                        hacer de tu celebración un momento único e inolvidable.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>PASTELERIA EL CUMGRI</h3>
+                <p>Rellenos con amor "Secretos de Bolivia"</p>
+                <p>Llevamos los auténticos sabores bolivianos a tu mesa con productos artesanales de la más alta calidad.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Enlaces Rápidos</h3>
+                <p><a href="index.html">Inicio</a></p>
+                <p><a href="productos.html">Productos</a></p>
+                <p><a href="nosotros.html">Nosotros</a></p>
+                <p><a href="blogs.html">Blogs</a></p>
+                <p><a href="contacto.html">Contacto</a></p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Categorías</h3>
+                <p><a href="productos.html?categoria=Tortas Cuadradas">Tortas Cuadradas</a></p>
+                <p><a href="productos.html?categoria=Tortas Circulares">Tortas Circulares</a></p>
+                <p><a href="productos.html?categoria=Postres Individuales">Postres Individuales</a></p>
+                <p><a href="productos.html?categoria=Productos Veganos">Productos Veganos</a></p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <p>📧 info@pasteleriaelcumgri.cl</p>
+                <p>📞 +56 9 1234 5678</p>
+                <p>📍 Santiago, Chile</p>
+                <p>🕒 Lun-Dom: 8:00 - 20:00</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2024 PASTELERIA EL CUMGRI. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Carrito de Compras (Sidebar) -->
+    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>Carrito de Compras</h3>
+            <button class="cart-close" onclick="toggleCart()">×</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <!-- Los items del carrito se cargarán dinámicamente -->
+        </div>
+        <div class="cart-total">
+            <div class="cart-total-price" id="cartTotal">Total: $0</div>
+            <button class="btn btn-primary" style="width: 100%;" onclick="proceedToCheckout()">
+                Proceder al Pago
+            </button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="data/productos.js"></script>
+    <script src="js/carrito.js"></script>
+    <script src="js/main.js"></script>
+    
+    <script>
+        // Cargar productos destacados al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            cargarProductosDestacados();
+            actualizarContadorCarrito();
+        });
+        
+        function cargarProductosDestacados() {
+            const container = document.getElementById('productosDestacados');
+            // Mostrar los primeros 6 productos
+            const productosDestacados = productos.slice(0, 6);
+            
+            container.innerHTML = productosDestacados.map(producto => `
+                <div class="producto-card fade-in-up">
+                    <img src="${producto.imagen}" alt="${producto.nombre}" class="producto-imagen">
+                    <div class="producto-info">
+                        <h3 class="producto-nombre">${producto.nombre}</h3>
+                        <div class="producto-precio">$${producto.precio.toLocaleString('es-CL')}</div>
+                        <p class="producto-descripcion">${producto.descripcion.substring(0, 100)}...</p>
+                        <button class="btn btn-primary" onclick="agregarAlCarrito('${producto.codigo}')">
+                            Agregar al Carrito
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+    </script>
+</body>
+</html>
+

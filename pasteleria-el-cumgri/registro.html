@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - PASTELERIA EL CUMGRI</title>
+    <meta name="description" content="Regístrate en PASTELERIA EL CUMGRI y disfruta de descuentos especiales y promociones exclusivas.">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <a href="index.html" class="logo">
+                <h1>PASTELERIA EL CUMGRI</h1>
+                <span class="logo-subtitle">Rellenos con amor "Secretos de Bolivia"</span>
+            </a>
+            
+            <ul class="nav-menu">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="productos.html">Productos</a></li>
+                <li><a href="nosotros.html">Nosotros</a></li>
+                <li><a href="blogs.html">Blogs</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <a href="login.html" class="btn btn-secondary">Iniciar Sesión</a>
+                <a href="registro.html" class="btn btn-primary active">Registrarse</a>
+                <div class="cart-icon" onclick="toggleCart()">
+                    🛒
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Formulario de Registro -->
+    <section class="section">
+        <div class="form-container">
+            <h1 class="text-center">Crear Cuenta</h1>
+            <p class="text-center text-secondary">Únete a la familia PASTELERIA EL CUMGRI y disfruta de beneficios exclusivos</p>
+            
+            <!-- Información de descuentos -->
+            <div class="descuentos-info">
+                <h3>🎉 Beneficios Especiales</h3>
+                <ul>
+                    <li>🎂 <strong>Mayores de 50 años:</strong> 50% de descuento en todos los productos</li>
+                    <li>🎁 <strong>Código "FELICES50":</strong> 10% de descuento de por vida</li>
+                    <li>🎓 <strong>Estudiantes Duoc:</strong> Torta gratis en tu cumpleaños (con correo institucional)</li>
+                </ul>
+            </div>
+
+            <form id="formularioRegistro" onsubmit="return procesarRegistro(event)">
+                <!-- Información Personal -->
+                <div class="form-section">
+                    <h3>Información Personal</h3>
+                    
+                    <div class="form-group">
+                        <label for="run">RUN *</label>
+                        <input type="text" id="run" name="run" class="form-control" 
+                               placeholder="Ej: 12345678-9" 
+                               oninput="formatearRUNInput(this); validarCampoTiempoReal(this, 'run')" 
+                               maxlength="12" required>
+                        <small class="text-secondary">Sin puntos, con guión. Ej: 12345678-9</small>
+                        <div class="error-message" id="error-run"></div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nombre">Nombre *</label>
+                            <input type="text" id="nombre" name="nombre" class="form-control" 
+                                   placeholder="Tu nombre" maxlength="50" required>
+                            <div class="error-message" id="error-nombre"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="apellidos">Apellidos *</label>
+                            <input type="text" id="apellidos" name="apellidos" class="form-control" 
+                                   placeholder="Tus apellidos" maxlength="100" required>
+                            <div class="error-message" id="error-apellidos"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Correo Electrónico *</label>
+                        <input type="email" id="email" name="email" class="form-control" 
+                               placeholder="tu@email.com" maxlength="100" 
+                               oninput="validarCampoTiempoReal(this, 'email')" required>
+                        <small class="text-secondary">Solo se permiten correos @duoc.cl, @profesor.duoc.cl y @gmail.com</small>
+                        <div class="error-message" id="error-email"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fechaNacimiento">Fecha de Nacimiento</label>
+                        <input type="date" id="fechaNacimiento" name="fechaNacimiento" class="form-control">
+                        <small class="text-secondary">Opcional - Necesario para descuentos por edad</small>
+                        <div class="error-message" id="error-fechaNacimiento"></div>
+                    </div>
+                </div>
+
+                <!-- Ubicación -->
+                <div class="form-section">
+                    <h3>Ubicación</h3>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="region">Región *</label>
+                            <select id="region" name="region" class="form-control" onchange="cargarComunas()" required>
+                                <option value="">Seleccionar región</option>
+                            </select>
+                            <div class="error-message" id="error-region"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="comuna">Comuna *</label>
+                            <select id="comuna" name="comuna" class="form-control" required>
+                                <option value="">Seleccionar comuna</option>
+                            </select>
+                            <div class="error-message" id="error-comuna"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="direccion">Dirección *</label>
+                        <textarea id="direccion" name="direccion" class="form-control" 
+                                  placeholder="Tu dirección completa" maxlength="300" rows="3" required></textarea>
+                        <div class="error-message" id="error-direccion"></div>
+                    </div>
+                </div>
+
+                <!-- Contraseña -->
+                <div class="form-section">
+                    <h3>Contraseña</h3>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="contrasena">Contraseña *</label>
+                            <input type="password" id="contrasena" name="contrasena" class="form-control" 
+                                   placeholder="Entre 4 y 10 caracteres" 
+                                   oninput="validarCampoTiempoReal(this, 'contrasena')" 
+                                   minlength="4" maxlength="10" required>
+                            <div class="error-message" id="error-contrasena"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirmarContrasena">Confirmar Contraseña *</label>
+                            <input type="password" id="confirmarContrasena" name="confirmarContrasena" 
+                                   class="form-control" placeholder="Repetir contraseña" 
+                                   minlength="4" maxlength="10" required>
+                            <div class="error-message" id="error-confirmarContrasena"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Código de Descuento -->
+                <div class="form-section">
+                    <h3>Código de Descuento (Opcional)</h3>
+                    
+                    <div class="form-group">
+                        <label for="codigoDescuento">Código de Descuento</label>
+                        <input type="text" id="codigoDescuento" name="codigoDescuento" class="form-control" 
+                               placeholder="Ej: FELICES50" maxlength="20">
+                        <small class="text-secondary">Ingresa "FELICES50" para obtener 10% de descuento de por vida</small>
+                    </div>
+                </div>
+
+                <!-- Términos y Condiciones -->
+                <div class="form-group">
+                    <label class="checkbox-container">
+                        <input type="checkbox" id="terminos" name="terminos" required>
+                        <span class="checkmark"></span>
+                        Acepto los <a href="#" onclick="mostrarTerminos()">términos y condiciones</a> *
+                    </label>
+                    <div class="error-message" id="error-terminos"></div>
+                </div>
+
+                <!-- Botones -->
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary btn-grande">
+                        Crear Cuenta
+                    </button>
+                    <p class="text-center mt-2">
+                        ¿Ya tienes cuenta? <a href="login.html">Inicia sesión aquí</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>PASTELERIA EL CUMGRI</h3>
+                <p>Rellenos con amor "Secretos de Bolivia"</p>
+                <p>Llevamos los auténticos sabores bolivianos a tu mesa con productos artesanales de la más alta calidad.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Enlaces Rápidos</h3>
+                <p><a href="index.html">Inicio</a></p>
+                <p><a href="productos.html">Productos</a></p>
+                <p><a href="nosotros.html">Nosotros</a></p>
+                <p><a href="blogs.html">Blogs</a></p>
+                <p><a href="contacto.html">Contacto</a></p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Categorías</h3>
+                <p><a href="productos.html?categoria=Tortas Cuadradas">Tortas Cuadradas</a></p>
+                <p><a href="productos.html?categoria=Tortas Circulares">Tortas Circulares</a></p>
+                <p><a href="productos.html?categoria=Postres Individuales">Postres Individuales</a></p>
+                <p><a href="productos.html?categoria=Productos Veganos">Productos Veganos</a></p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <p>📧 info@pasteleriaelcumgri.cl</p>
+                <p>📞 +56 9 1234 5678</p>
+                <p>📍 Santiago, Chile</p>
+                <p>🕒 Lun-Dom: 8:00 - 20:00</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2024 PASTELERIA EL CUMGRI. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Carrito de Compras (Sidebar) -->
+    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>Carrito de Compras</h3>
+            <button class="cart-close" onclick="toggleCart()">×</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <!-- Los items del carrito se cargarán dinámicamente -->
+        </div>
+        <div class="cart-total">
+            <div class="cart-total-price" id="cartTotal">Total: $0</div>
+            <button class="btn btn-primary" style="width: 100%;" onclick="proceedToCheckout()">
+                Proceder al Pago
+            </button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="data/productos.js"></script>
+    <script src="data/regiones.js"></script>
+    <script src="js/carrito.js"></script>
+    <script src="js/validaciones.js"></script>
+    <script src="js/main.js"></script>
+    
+    <script>
+        // Inicializar página
+        document.addEventListener('DOMContentLoaded', function() {
+            cargarRegiones();
+            actualizarContadorCarrito();
+        });
+
+        // Cargar regiones en el select
+        function cargarRegiones() {
+            const selectRegion = document.getElementById('region');
+            selectRegion.innerHTML = '<option value="">Seleccionar región</option>';
+            
+            regiones.forEach(region => {
+                const option = document.createElement('option');
+                option.value = region.id;
+                option.textContent = region.nombre;
+                selectRegion.appendChild(option);
+            });
+        }
+
+        // Cargar comunas según la región seleccionada
+        function cargarComunas() {
+            const regionId = parseInt(document.getElementById('region').value);
+            const selectComuna = document.getElementById('comuna');
+            
+            selectComuna.innerHTML = '<option value="">Seleccionar comuna</option>';
+            
+            if (regionId) {
+                const regionSeleccionada = regiones.find(r => r.id === regionId);
+                if (regionSeleccionada) {
+                    regionSeleccionada.comunas.forEach(comuna => {
+                        const option = document.createElement('option');
+                        option.value = comuna;
+                        option.textContent = comuna;
+                        selectComuna.appendChild(option);
+                    });
+                }
+            }
+        }
+
+        // Procesar formulario de registro
+        function procesarRegistro(event) {
+            event.preventDefault();
+            
+            if (!validarFormularioRegistro()) {
+                mostrarMensajeError('Por favor corrige los errores en el formulario');
+                return false;
+            }
+
+            // Obtener datos del formulario
+            const formData = new FormData(event.target);
+            const datosUsuario = Object.fromEntries(formData.entries());
+            
+            // Calcular edad si se proporcionó fecha de nacimiento
+            if (datosUsuario.fechaNacimiento) {
+                datosUsuario.edad = calcularEdad(datosUsuario.fechaNacimiento);
+                datosUsuario.esCumpleanos = esCumpleanos(datosUsuario.fechaNacimiento);
+            }
+            
+            // Verificar si es estudiante Duoc
+            datosUsuario.esEstudianteDuoc = datosUsuario.email.endsWith('@duoc.cl');
+            
+            // Simular registro (en una aplicación real, esto se enviaría al servidor)
+            const usuarios = JSON.parse(localStorage.getItem('usuariosElCumgri') || '[]');
+            
+            // Verificar si el usuario ya existe
+            const usuarioExistente = usuarios.find(u => u.email === datosUsuario.email || u.run === datosUsuario.run);
+            if (usuarioExistente) {
+                mostrarMensajeError('Ya existe un usuario con ese email o RUN');
+                return false;
+            }
+            
+            // Agregar usuario
+            datosUsuario.id = Date.now();
+            datosUsuario.fechaRegistro = new Date().toISOString();
+            usuarios.push(datosUsuario);
+            localStorage.setItem('usuariosElCumgri', JSON.stringify(usuarios));
+            
+            // Mostrar mensaje de éxito
+            mostrarMensajeExito('¡Cuenta creada exitosamente! Redirigiendo al login...');
+            
+            // Redirigir al login después de 2 segundos
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 2000);
+            
+            return false;
+        }
+
+        // Mostrar términos y condiciones
+        function mostrarTerminos() {
+            alert(`TÉRMINOS Y CONDICIONES - PASTELERIA EL CUMGRI
+
+1. ACEPTACIÓN DE TÉRMINOS
+Al registrarse en nuestro sitio web, usted acepta estos términos y condiciones.
+
+2. DESCUENTOS ESPECIALES
+- Usuarios mayores de 50 años: 50% de descuento en todos los productos
+- Código "FELICES50": 10% de descuento de por vida
+- Estudiantes Duoc: Torta gratis en cumpleaños con correo institucional
+
+3. PRIVACIDAD
+Sus datos personales serán protegidos según nuestra política de privacidad.
+
+4. USO DEL SITIO
+El sitio debe usarse únicamente para fines legítimos de compra.
+
+5. MODIFICACIONES
+Nos reservamos el derecho de modificar estos términos en cualquier momento.
+
+Para más información, contacte a info@pasteleriaelcumgri.cl`);
+        }
+    </script>
+
+    <style>
+        .active {
+            background-color: var(--color-chocolate) !important;
+            color: white !important;
+        }
+
+        .descuentos-info {
+            background: linear-gradient(135deg, var(--color-rosa-suave), #ffb3ba);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .descuentos-info h3 {
+            margin-bottom: 1rem;
+            color: var(--color-chocolate);
+        }
+
+        .descuentos-info ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .descuentos-info li {
+            margin-bottom: 0.5rem;
+            padding: 0.5rem;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 5px;
+        }
+
+        .form-section {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .form-section:last-child {
+            border-bottom: none;
+        }
+
+        .form-section h3 {
+            color: var(--color-chocolate);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .checkbox-container input {
+            margin-right: 0.5rem;
+        }
+
+        .form-actions {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .btn-grande {
+            padding: 1rem 3rem;
+            font-size: 1.1rem;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</body>
+</html>
+

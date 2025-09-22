@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos - PASTELERIA EL CUMGRI</title>
+    <meta name="description" content="Descubre todos nuestros productos de repostería boliviana: tortas, postres individuales, productos sin azúcar y más.">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <a href="index.html" class="logo">
+                <h1>PASTELERIA EL CUMGRI</h1>
+                <span class="logo-subtitle">Rellenos con amor "Secretos de Bolivia"</span>
+            </a>
+            
+            <ul class="nav-menu">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="productos.html" class="active">Productos</a></li>
+                <li><a href="nosotros.html">Nosotros</a></li>
+                <li><a href="blogs.html">Blogs</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <a href="login.html" class="btn btn-secondary">Iniciar Sesión</a>
+                <a href="registro.html" class="btn btn-primary">Registrarse</a>
+                <div class="cart-icon" onclick="toggleCart()">
+                    🛒
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Sección de Productos -->
+    <section class="section">
+        <h1 class="section-title">Nuestros Productos</h1>
+        
+        <!-- Filtros y Búsqueda -->
+        <div class="filtros-container">
+            <div class="filtros-row">
+                <div class="form-group">
+                    <label for="busqueda">Buscar productos:</label>
+                    <input type="text" id="busqueda" class="form-control" placeholder="Buscar por nombre o descripción..." onkeyup="filtrarProductos()">
+                </div>
+                
+                <div class="form-group">
+                    <label for="categoriaFiltro">Filtrar por categoría:</label>
+                    <select id="categoriaFiltro" class="form-control" onchange="filtrarProductos()">
+                        <option value="">Todas las categorías</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="ordenar">Ordenar por:</label>
+                    <select id="ordenar" class="form-control" onchange="filtrarProductos()">
+                        <option value="nombre">Nombre (A-Z)</option>
+                        <option value="precio-asc">Precio (Menor a Mayor)</option>
+                        <option value="precio-desc">Precio (Mayor a Menor)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contador de productos -->
+        <div class="productos-contador">
+            <p id="contadorProductos">Mostrando todos los productos</p>
+        </div>
+
+        <!-- Grid de Productos -->
+        <div class="productos-grid" id="productosContainer">
+            <!-- Los productos se cargarán dinámicamente -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>PASTELERIA EL CUMGRI</h3>
+                <p>Rellenos con amor "Secretos de Bolivia"</p>
+                <p>Llevamos los auténticos sabores bolivianos a tu mesa con productos artesanales de la más alta calidad.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Enlaces Rápidos</h3>
+                <p><a href="index.html">Inicio</a></p>
+                <p><a href="productos.html">Productos</a></p>
+                <p><a href="nosotros.html">Nosotros</a></p>
+                <p><a href="blogs.html">Blogs</a></p>
+                <p><a href="contacto.html">Contacto</a></p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Categorías</h3>
+                <p><a href="productos.html?categoria=Tortas Cuadradas">Tortas Cuadradas</a></p>
+                <p><a href="productos.html?categoria=Tortas Circulares">Tortas Circulares</a></p>
+                <p><a href="productos.html?categoria=Postres Individuales">Postres Individuales</a></p>
+                <p><a href="productos.html?categoria=Productos Veganos">Productos Veganos</a></p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <p>📧 info@pasteleriaelcumgri.cl</p>
+                <p>📞 +56 9 1234 5678</p>
+                <p>📍 Santiago, Chile</p>
+                <p>🕒 Lun-Dom: 8:00 - 20:00</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2024 PASTELERIA EL CUMGRI. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Carrito de Compras (Sidebar) -->
+    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>Carrito de Compras</h3>
+            <button class="cart-close" onclick="toggleCart()">×</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <!-- Los items del carrito se cargarán dinámicamente -->
+        </div>
+        <div class="cart-total">
+            <div class="cart-total-price" id="cartTotal">Total: $0</div>
+            <button class="btn btn-primary" style="width: 100%;" onclick="proceedToCheckout()">
+                Proceder al Pago
+            </button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="data/productos.js"></script>
+    <script src="js/carrito.js"></script>
+    <script src="js/main.js"></script>
+    
+    <script>
+        let productosFiltrados = [...productos];
+
+        // Inicializar página
+        document.addEventListener('DOMContentLoaded', function() {
+            cargarCategorias('categoriaFiltro');
+            aplicarFiltroURL();
+            mostrarProductosFiltrados();
+            actualizarContadorCarrito();
+        });
+
+        // Aplicar filtro desde URL si existe
+        function aplicarFiltroURL() {
+            const categoriaURL = obtenerParametroURL('categoria');
+            if (categoriaURL) {
+                document.getElementById('categoriaFiltro').value = categoriaURL;
+            }
+        }
+
+        // Función principal de filtrado
+        function filtrarProductos() {
+            const busqueda = document.getElementById('busqueda').value.toLowerCase();
+            const categoria = document.getElementById('categoriaFiltro').value;
+            const orden = document.getElementById('ordenar').value;
+
+            // Filtrar por búsqueda
+            productosFiltrados = productos.filter(producto => {
+                const coincideBusqueda = !busqueda || 
+                    producto.nombre.toLowerCase().includes(busqueda) ||
+                    producto.descripcion.toLowerCase().includes(busqueda);
+                
+                const coincideCategoria = !categoria || producto.categoria === categoria;
+                
+                return coincideBusqueda && coincideCategoria;
+            });
+
+            // Ordenar productos
+            switch(orden) {
+                case 'nombre':
+                    productosFiltrados.sort((a, b) => a.nombre.localeCompare(b.nombre));
+                    break;
+                case 'precio-asc':
+                    productosFiltrados.sort((a, b) => a.precio - b.precio);
+                    break;
+                case 'precio-desc':
+                    productosFiltrados.sort((a, b) => b.precio - a.precio);
+                    break;
+            }
+
+            mostrarProductosFiltrados();
+            actualizarContador();
+        }
+
+        // Mostrar productos filtrados
+        function mostrarProductosFiltrados() {
+            const container = document.getElementById('productosContainer');
+            
+            if (productosFiltrados.length === 0) {
+                container.innerHTML = `
+                    <div class="no-productos">
+                        <h3>No se encontraron productos</h3>
+                        <p>Intenta con otros términos de búsqueda o selecciona una categoría diferente.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = productosFiltrados.map(producto => `
+                <div class="producto-card fade-in-up">
+                    <img src="${producto.imagen}" alt="${producto.nombre}" class="producto-imagen" 
+                         onclick="verDetalleProducto('${producto.codigo}')">
+                    <div class="producto-info">
+                        <h3 class="producto-nombre">${producto.nombre}</h3>
+                        <div class="producto-categoria">${producto.categoria}</div>
+                        <div class="producto-precio">${formatearPrecio(producto.precio)}</div>
+                        <p class="producto-descripcion">${producto.descripcion}</p>
+                        <div class="producto-stock">
+                            ${producto.stock > 0 ? 
+                                `<span class="stock-disponible">Stock: ${producto.stock}</span>` :
+                                `<span class="stock-agotado">Sin stock</span>`
+                            }
+                        </div>
+                        <div class="producto-acciones">
+                            <button class="btn btn-secondary" onclick="verDetalleProducto('${producto.codigo}')">
+                                Ver Detalle
+                            </button>
+                            <button class="btn btn-primary" 
+                                    onclick="agregarAlCarrito('${producto.codigo}')"
+                                    ${producto.stock <= 0 ? 'disabled' : ''}>
+                                ${producto.stock > 0 ? 'Agregar al Carrito' : 'Sin Stock'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Actualizar contador de productos
+        function actualizarContador() {
+            const contador = document.getElementById('contadorProductos');
+            const total = productosFiltrados.length;
+            const totalGeneral = productos.length;
+            
+            if (total === totalGeneral) {
+                contador.textContent = `Mostrando todos los productos (${total})`;
+            } else {
+                contador.textContent = `Mostrando ${total} de ${totalGeneral} productos`;
+            }
+        }
+    </script>
+
+    <style>
+        .active {
+            color: var(--color-chocolate) !important;
+            font-weight: 700;
+        }
+
+        .filtros-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .filtros-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 1rem;
+            align-items: end;
+        }
+
+        .productos-contador {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--color-texto-secundario);
+        }
+
+        .producto-categoria {
+            font-size: 0.9rem;
+            color: var(--color-texto-secundario);
+            margin-bottom: 0.5rem;
+            font-style: italic;
+        }
+
+        .producto-stock {
+            margin-bottom: 1rem;
+        }
+
+        .stock-disponible {
+            color: #4CAF50;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .stock-agotado {
+            color: #f44336;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .no-productos {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 3rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .no-productos h3 {
+            color: var(--color-chocolate);
+            margin-bottom: 1rem;
+        }
+
+        .btn:disabled {
+            background-color: #ccc;
+            color: #666;
+            cursor: not-allowed;
+        }
+
+        .btn:disabled:hover {
+            transform: none;
+            background-color: #ccc;
+        }
+
+        @media (max-width: 768px) {
+            .filtros-row {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
+    </style>
+</body>
+</html>
+

@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle del Producto - PASTELERIA EL CUMGRI</title>
+    <meta name="description" content="Detalle completo del producto con opción de personalización y agregar al carrito.">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <a href="index.html" class="logo">
+                <h1>PASTELERIA EL CUMGRI</h1>
+                <span class="logo-subtitle">Rellenos con amor "Secretos de Bolivia"</span>
+            </a>
+            
+            <ul class="nav-menu">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="productos.html">Productos</a></li>
+                <li><a href="nosotros.html">Nosotros</a></li>
+                <li><a href="blogs.html">Blogs</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <a href="login.html" class="btn btn-secondary">Iniciar Sesión</a>
+                <a href="registro.html" class="btn btn-primary">Registrarse</a>
+                <div class="cart-icon" onclick="toggleCart()">
+                    🛒
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <div class="section">
+            <a href="index.html">Inicio</a> > 
+            <a href="productos.html">Productos</a> > 
+            <span id="breadcrumbProducto">Detalle del Producto</span>
+        </div>
+    </div>
+
+    <!-- Detalle del Producto -->
+    <section class="section">
+        <div class="producto-detalle" id="productoDetalle">
+            <!-- El contenido se cargará dinámicamente -->
+        </div>
+    </section>
+
+    <!-- Productos Relacionados -->
+    <section class="section">
+        <h2 class="section-title">Productos Relacionados</h2>
+        <div class="productos-grid" id="productosRelacionados">
+            <!-- Los productos relacionados se cargarán dinámicamente -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>PASTELERIA EL CUMGRI</h3>
+                <p>Rellenos con amor "Secretos de Bolivia"</p>
+                <p>Llevamos los auténticos sabores bolivianos a tu mesa con productos artesanales de la más alta calidad.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Enlaces Rápidos</h3>
+                <p><a href="index.html">Inicio</a></p>
+                <p><a href="productos.html">Productos</a></p>
+                <p><a href="nosotros.html">Nosotros</a></p>
+                <p><a href="blogs.html">Blogs</a></p>
+                <p><a href="contacto.html">Contacto</a></p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Categorías</h3>
+                <p><a href="productos.html?categoria=Tortas Cuadradas">Tortas Cuadradas</a></p>
+                <p><a href="productos.html?categoria=Tortas Circulares">Tortas Circulares</a></p>
+                <p><a href="productos.html?categoria=Postres Individuales">Postres Individuales</a></p>
+                <p><a href="productos.html?categoria=Productos Veganos">Productos Veganos</a></p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <p>📧 info@pasteleriaelcumgri.cl</p>
+                <p>📞 +56 9 1234 5678</p>
+                <p>📍 Santiago, Chile</p>
+                <p>🕒 Lun-Dom: 8:00 - 20:00</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2024 PASTELERIA EL CUMGRI. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Carrito de Compras (Sidebar) -->
+    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>Carrito de Compras</h3>
+            <button class="cart-close" onclick="toggleCart()">×</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <!-- Los items del carrito se cargarán dinámicamente -->
+        </div>
+        <div class="cart-total">
+            <div class="cart-total-price" id="cartTotal">Total: $0</div>
+            <button class="btn btn-primary" style="width: 100%;" onclick="proceedToCheckout()">
+                Proceder al Pago
+            </button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="data/productos.js"></script>
+    <script src="js/carrito.js"></script>
+    <script src="js/main.js"></script>
+    
+    <script>
+        let productoActual = null;
+
+        // Inicializar página
+        document.addEventListener('DOMContentLoaded', function() {
+            cargarDetalleProducto();
+            actualizarContadorCarrito();
+        });
+
+        // Cargar detalle del producto
+        function cargarDetalleProducto() {
+            const codigoProducto = obtenerParametroURL('codigo');
+            
+            if (!codigoProducto) {
+                mostrarError('Producto no encontrado');
+                return;
+            }
+
+            productoActual = productos.find(p => p.codigo === codigoProducto);
+            
+            if (!productoActual) {
+                mostrarError('Producto no encontrado');
+                return;
+            }
+
+            mostrarDetalleProducto();
+            cargarProductosRelacionados();
+            actualizarBreadcrumb();
+        }
+
+        // Mostrar detalle del producto
+        function mostrarDetalleProducto() {
+            const container = document.getElementById('productoDetalle');
+            const esPersonalizable = productoActual.categoria.includes('Torta');
+            
+            container.innerHTML = `
+                <div class="detalle-container">
+                    <div class="detalle-imagen">
+                        <img src="${productoActual.imagen}" alt="${productoActual.nombre}" id="imagenPrincipal">
+                    </div>
+                    
+                    <div class="detalle-info">
+                        <h1>${productoActual.nombre}</h1>
+                        <div class="detalle-categoria">${productoActual.categoria}</div>
+                        <div class="detalle-precio">${formatearPrecio(productoActual.precio)}</div>
+                        
+                        <div class="detalle-descripcion">
+                            <h3>Descripción</h3>
+                            <p>${productoActual.descripcion}</p>
+                        </div>
+                        
+                        <div class="detalle-stock">
+                            ${productoActual.stock > 0 ? 
+                                `<span class="stock-disponible">✅ Stock disponible: ${productoActual.stock} unidades</span>` :
+                                `<span class="stock-agotado">❌ Sin stock disponible</span>`
+                            }
+                            ${productoActual.stock <= productoActual.stockCritico && productoActual.stock > 0 ? 
+                                `<div class="stock-critico">⚠️ Stock crítico - ¡Últimas unidades!</div>` : ''
+                            }
+                        </div>
+                        
+                        ${esPersonalizable ? `
+                            <div class="personalizacion">
+                                <h3>Personalización</h3>
+                                <div class="form-group">
+                                    <label for="mensajePersonalizado">Mensaje personalizado (opcional):</label>
+                                    <textarea id="mensajePersonalizado" class="form-control" 
+                                              placeholder="Ej: Feliz Cumpleaños María" 
+                                              maxlength="100" rows="3"></textarea>
+                                    <small class="text-secondary">Máximo 100 caracteres</small>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="tipoTorta">Tipo de torta:</label>
+                                    <select id="tipoTorta" class="form-control">
+                                        <option value="cuadrada">Cuadrada</option>
+                                        <option value="circular">Circular</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="tamanoTorta">Tamaño:</label>
+                                    <select id="tamanoTorta" class="form-control">
+                                        <option value="pequena">Pequeña (6-8 personas)</option>
+                                        <option value="mediana">Mediana (10-12 personas)</option>
+                                        <option value="grande">Grande (15-20 personas)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        ` : ''}
+                        
+                        <div class="cantidad-selector">
+                            <label for="cantidad">Cantidad:</label>
+                            <div class="cantidad-controls">
+                                <button type="button" onclick="cambiarCantidad(-1)">-</button>
+                                <input type="number" id="cantidad" value="1" min="1" max="${productoActual.stock}" readonly>
+                                <button type="button" onclick="cambiarCantidad(1)">+</button>
+                            </div>
+                        </div>
+                        
+                        <div class="acciones-producto">
+                            <button class="btn btn-primary btn-grande" 
+                                    onclick="agregarProductoPersonalizado()"
+                                    ${productoActual.stock <= 0 ? 'disabled' : ''}>
+                                ${productoActual.stock > 0 ? 'Agregar al Carrito' : 'Sin Stock'}
+                            </button>
+                            <button class="btn btn-secondary" onclick="history.back()">
+                                Volver
+                            </button>
+                        </div>
+                        
+                        <div class="info-adicional">
+                            <h3>Información Adicional</h3>
+                            <ul>
+                                <li><strong>Código:</strong> ${productoActual.codigo}</li>
+                                <li><strong>Categoría:</strong> ${productoActual.categoria}</li>
+                                <li><strong>Tiempo de preparación:</strong> 24-48 horas</li>
+                                <li><strong>Conservación:</strong> Refrigerar entre 2°C y 8°C</li>
+                                ${esPersonalizable ? '<li><strong>Personalización:</strong> Disponible con mensaje especial</li>' : ''}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Cambiar cantidad
+        function cambiarCantidad(delta) {
+            const cantidadInput = document.getElementById('cantidad');
+            const nuevaCantidad = parseInt(cantidadInput.value) + delta;
+            
+            if (nuevaCantidad >= 1 && nuevaCantidad <= productoActual.stock) {
+                cantidadInput.value = nuevaCantidad;
+            }
+        }
+
+        // Agregar producto personalizado al carrito
+        function agregarProductoPersonalizado() {
+            const cantidad = parseInt(document.getElementById('cantidad').value);
+            const mensajePersonalizado = document.getElementById('mensajePersonalizado')?.value || '';
+            const tipoTorta = document.getElementById('tipoTorta')?.value || '';
+            const tamanoTorta = document.getElementById('tamanoTorta')?.value || '';
+            
+            // Validar mensaje personalizado
+            if (mensajePersonalizado && mensajePersonalizado.length > 100) {
+                mostrarMensajeError('El mensaje personalizado no puede exceder 100 caracteres');
+                return;
+            }
+            
+            // Agregar al carrito con personalización
+            const exito = carrito.agregarProducto(productoActual.codigo, cantidad);
+            
+            if (exito && (mensajePersonalizado || tipoTorta || tamanoTorta)) {
+                // Guardar personalización en localStorage
+                const personalizaciones = JSON.parse(localStorage.getItem('personalizacionesElCumgri') || '{}');
+                personalizaciones[productoActual.codigo] = {
+                    mensaje: mensajePersonalizado,
+                    tipo: tipoTorta,
+                    tamano: tamanoTorta
+                };
+                localStorage.setItem('personalizacionesElCumgri', JSON.stringify(personalizaciones));
+                
+                mostrarMensajeExito(`${productoActual.nombre} agregado al carrito con personalización`);
+            }
+        }
+
+        // Cargar productos relacionados
+        function cargarProductosRelacionados() {
+            const productosRelacionados = productos
+                .filter(p => p.categoria === productoActual.categoria && p.codigo !== productoActual.codigo)
+                .slice(0, 4);
+            
+            const container = document.getElementById('productosRelacionados');
+            
+            if (productosRelacionados.length === 0) {
+                container.innerHTML = '<p class="text-center">No hay productos relacionados disponibles.</p>';
+                return;
+            }
+            
+            container.innerHTML = productosRelacionados.map(producto => `
+                <div class="producto-card">
+                    <img src="${producto.imagen}" alt="${producto.nombre}" class="producto-imagen" 
+                         onclick="verDetalleProducto('${producto.codigo}')">
+                    <div class="producto-info">
+                        <h3 class="producto-nombre">${producto.nombre}</h3>
+                        <div class="producto-precio">${formatearPrecio(producto.precio)}</div>
+                        <p class="producto-descripcion">${producto.descripcion.substring(0, 80)}...</p>
+                        <div class="producto-acciones">
+                            <button class="btn btn-secondary" onclick="verDetalleProducto('${producto.codigo}')">
+                                Ver Detalle
+                            </button>
+                            <button class="btn btn-primary" onclick="agregarAlCarrito('${producto.codigo}')">
+                                Agregar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Actualizar breadcrumb
+        function actualizarBreadcrumb() {
+            const breadcrumb = document.getElementById('breadcrumbProducto');
+            if (breadcrumb && productoActual) {
+                breadcrumb.textContent = productoActual.nombre;
+            }
+        }
+
+        // Mostrar error
+        function mostrarError(mensaje) {
+            const container = document.getElementById('productoDetalle');
+            container.innerHTML = `
+                <div class="error-container">
+                    <h2>Error</h2>
+                    <p>${mensaje}</p>
+                    <a href="productos.html" class="btn btn-primary">Ver Todos los Productos</a>
+                </div>
+            `;
+        }
+    </script>
+
+    <style>
+        .breadcrumb {
+            background-color: #f8f9fa;
+            padding: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        .breadcrumb a {
+            color: var(--color-chocolate);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .detalle-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .detalle-imagen img {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .detalle-info h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .detalle-categoria {
+            color: var(--color-texto-secundario);
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+
+        .detalle-precio {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--color-chocolate);
+            margin-bottom: 2rem;
+        }
+
+        .detalle-descripcion,
+        .personalizacion,
+        .info-adicional {
+            margin-bottom: 2rem;
+        }
+
+        .detalle-descripcion h3,
+        .personalizacion h3,
+        .info-adicional h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--color-chocolate);
+        }
+
+        .detalle-stock {
+            margin-bottom: 2rem;
+        }
+
+        .stock-critico {
+            color: #ff9800;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+
+        .cantidad-selector {
+            margin-bottom: 2rem;
+        }
+
+        .cantidad-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .cantidad-controls button {
+            background: var(--color-chocolate);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cantidad-controls input {
+            width: 80px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .acciones-producto {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn-grande {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            flex: 1;
+        }
+
+        .info-adicional ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .info-adicional li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .error-container {
+            text-align: center;
+            padding: 3rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        @media (max-width: 768px) {
+            .detalle-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .detalle-info h1 {
+                font-size: 2rem;
+            }
+
+            .detalle-precio {
+                font-size: 1.5rem;
+            }
+
+            .acciones-producto {
+                flex-direction: column;
+            }
+        }
+    </style>
+</body>
+</html>
+
