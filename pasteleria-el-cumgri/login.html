@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión - PASTELERIA EL CUMGRI</title>
+    <meta name="description" content="Inicia sesión en tu cuenta de PASTELERIA EL CUMGRI para acceder a tus pedidos y beneficios.">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <a href="index.html" class="logo">
+                <h1>PASTELERIA EL CUMGRI</h1>
+                <span class="logo-subtitle">Rellenos con amor "Secretos de Bolivia"</span>
+            </a>
+            
+            <ul class="nav-menu">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="productos.html">Productos</a></li>
+                <li><a href="nosotros.html">Nosotros</a></li>
+                <li><a href="blogs.html">Blogs</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <a href="login.html" class="btn btn-secondary active">Iniciar Sesión</a>
+                <a href="registro.html" class="btn btn-primary">Registrarse</a>
+                <div class="cart-icon" onclick="toggleCart()">
+                    🛒
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Formulario de Inicio de Sesión -->
+    <section class="section">
+        <div class="form-container">
+            <h1 class="text-center">Iniciar Sesión</h1>
+            <p class="text-center text-secondary">Accede a tu cuenta para gestionar tus pedidos y disfrutar de beneficios.</p>
+
+            <form id="formularioLogin" onsubmit="return procesarLogin(event)">
+                <div class="form-group">
+                    <label for="email">Correo Electrónico *</label>
+                    <input type="email" id="email" name="email" class="form-control" 
+                           placeholder="tu@email.com" maxlength="100" 
+                           oninput="validarCampoTiempoReal(this, 'email')" required>
+                    <div class="error-message" id="error-email"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="contrasena">Contraseña *</label>
+                    <input type="password" id="contrasena" name="contrasena" class="form-control" 
+                           placeholder="Tu contraseña" maxlength="10" 
+                           oninput="validarCampoTiempoReal(this, 'contrasena')" required>
+                    <div class="error-message" id="error-contrasena"></div>
+                </div>
+
+                <div class="form-group">
+                    <a href="#" class="text-secondary">¿Olvidaste tu contraseña?</a>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary btn-grande">
+                        Entrar
+                    </button>
+                    <p class="text-center mt-2">
+                        ¿No tienes cuenta? <a href="registro.html">Regístrate aquí</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>PASTELERIA EL CUMGRI</h3>
+                <p>Rellenos con amor "Secretos de Bolivia"</p>
+                <p>Llevamos los auténticos sabores bolivianos a tu mesa con productos artesanales de la más alta calidad.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Enlaces Rápidos</h3>
+                <p><a href="index.html">Inicio</a></p>
+                <p><a href="productos.html">Productos</a></p>
+                <p><a href="nosotros.html">Nosotros</a></p>
+                <p><a href="blogs.html">Blogs</a></p>
+                <p><a href="contacto.html">Contacto</a></p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Categorías</h3>
+                <p><a href="productos.html?categoria=Tortas Cuadradas">Tortas Cuadradas</a></p>
+                <p><a href="productos.html?categoria=Tortas Circulares">Tortas Circulares</a></p>
+                <p><a href="productos.html?categoria=Postres Individuales">Postres Individuales</a></p>
+                <p><a href="productos.html?categoria=Productos Veganos">Productos Veganos</a></p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <p>📧 info@pasteleriaelcumgri.cl</p>
+                <p>📞 +56 9 1234 5678</p>
+                <p>📍 Santiago, Chile</p>
+                <p>🕒 Lun-Dom: 8:00 - 20:00</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2024 PASTELERIA EL CUMGRI. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Carrito de Compras (Sidebar) -->
+    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>Carrito de Compras</h3>
+            <button class="cart-close" onclick="toggleCart()">×</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <!-- Los items del carrito se cargarán dinámicamente -->
+        </div>
+        <div class="cart-total">
+            <div class="cart-total-price" id="cartTotal">Total: $0</div>
+            <button class="btn btn-primary" style="width: 100%;" onclick="proceedToCheckout()">
+                Proceder al Pago
+            </button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="data/productos.js"></script>
+    <script src="js/carrito.js"></script>
+    <script src="js/validaciones.js"></script>
+    <script src="js/main.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            actualizarContadorCarrito();
+        });
+
+        function procesarLogin(event) {
+            event.preventDefault();
+            
+            if (!validarFormularioLogin()) {
+                mostrarMensajeError('Por favor corrige los errores en el formulario');
+                return false;
+            }
+
+            const email = document.getElementById('email').value;
+            const contrasena = document.getElementById('contrasena').value;
+
+            // Simular autenticación (en una aplicación real, esto se enviaría al servidor)
+            const usuarios = JSON.parse(localStorage.getItem('usuariosElCumgri') || '[]');
+            const usuarioEncontrado = usuarios.find(u => u.email === email && u.contrasena === contrasena);
+
+            if (usuarioEncontrado) {
+                mostrarMensajeExito(`¡Bienvenido de nuevo, ${usuarioEncontrado.nombre}!`);
+                // Aquí podrías guardar el estado de sesión del usuario
+                localStorage.setItem('usuarioLogueado', JSON.stringify(usuarioEncontrado));
+                setTimeout(() => {
+                    window.location.href = 'index.html'; // Redirigir a la página principal
+                }, 2000);
+            } else {
+                mostrarMensajeError('Email o contraseña incorrectos.');
+            }
+            return false;
+        }
+    </script>
+
+    <style>
+        .active {
+            background-color: var(--color-chocolate) !important;
+            color: white !important;
+        }
+
+        .form-actions {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .btn-grande {
+            padding: 1rem 3rem;
+            font-size: 1.1rem;
+            width: 100%;
+            max-width: 300px;
+        }
+    </style>
+</body>
+</html>
+
