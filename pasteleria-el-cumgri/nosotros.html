@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nosotros - PASTELERIA EL CUMGRI</title>
+    <meta name="description" content="Conoce la historia y la misión de PASTELERIA EL CUMGRI, donde cada postre es un secreto de Bolivia.">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <a href="index.html" class="logo">
+                <h1>PASTELERIA EL CUMGRI</h1>
+                <span class="logo-subtitle">Rellenos con amor "Secretos de Bolivia"</span>
+            </a>
+            
+            <ul class="nav-menu">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="productos.html">Productos</a></li>
+                <li><a href="nosotros.html" class="active">Nosotros</a></li>
+                <li><a href="blogs.html">Blogs</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <a href="login.html" class="btn btn-secondary">Iniciar Sesión</a>
+                <a href="registro.html" class="btn btn-primary">Registrarse</a>
+                <div class="cart-icon" onclick="toggleCart()">
+                    🛒
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Contenido de la página Nosotros -->
+    <section class="section">
+        <div class="container">
+            <h1 class="text-center">Nuestra Historia: Un Dulce Viaje desde Bolivia</h1>
+            <p class="text-center text-secondary">En PASTELERIA EL CUMGRI, cada bocado es un pedazo de nuestra alma boliviana.</p>
+
+            <div class="nosotros-content">
+                <div class="nosotros-image">
+                    <img src="images/elementos-bolivia.jpg" alt="Cultura Boliviana">
+                </div>
+                <div class="nosotros-text">
+                    <h2>Nacidos de la Tradición y el Amor</h2>
+                    <p>PASTELERIA EL CUMGRI es más que una pastelería; es un homenaje a las ricas tradiciones culinarias de Bolivia. Fundada con la pasión de compartir los "Secretos de Bolivia" a través de sabores auténticos y recetas transmitidas de generación en generación, nos esforzamos por llevar un pedacito de nuestra tierra a cada hogar.</p>
+                    <p>Nuestra fundadora, [Nombre de la Fundadora, si aplica], creció entre los aromas de especias andinas y dulces caseros, aprendiendo el arte de la repostería de su abuela. Cada receta es cuidadosamente elaborada, utilizando ingredientes frescos y de alta calidad, muchos de ellos importados directamente para asegurar la autenticidad de cada sabor.</p>
+                </div>
+            </div>
+
+            <div class="nosotros-content reverse">
+                <div class="nosotros-text">
+                    <h2>Nuestra Misión y Visión</h2>
+                    <p><strong>Misión:</strong> Deleitar a nuestros clientes con productos de repostería boliviana de la más alta calidad, elaborados con amor y respeto por nuestras tradiciones, creando momentos dulces e inolvidables.</p>
+                    <p><strong>Visión:</strong> Ser la pastelería referente en la difusión de la cultura y los sabores de Bolivia, expandiendo nuestra presencia y manteniendo siempre la esencia artesanal y el compromiso con la excelencia.</p>
+                </div>
+                <div class="nosotros-image">
+                    <img src="images/pasteles-bolivianos.jpg" alt="Pasteles Bolivianos">
+                </div>
+            </div>
+
+            <div class="nosotros-values">
+                <h2>Nuestros Valores</h2>
+                <ul>
+                    <li><strong>Autenticidad:</strong> Respetamos y celebramos las recetas originales de Bolivia.</li>
+                    <li><strong>Calidad:</strong> Utilizamos solo los mejores ingredientes para garantizar un sabor excepcional.</li>
+                    <li><strong>Pasión:</strong> Cada postre es elaborado con dedicación y amor.</li>
+                    <li><strong>Comunidad:</strong> Apoyamos a productores locales y fomentamos el talento joven.</li>
+                    <li><strong>Innovación:</strong> Aunque honramos la tradición, siempre buscamos nuevas formas de sorprender.</li>
+                </ul>
+            </div>
+
+            <div class="nosotros-team text-center">
+                <h2>Conoce a Nuestro Equipo</h2>
+                <p>Detrás de cada dulce hay un equipo dedicado de pasteleros y amantes de la cultura boliviana, trabajando juntos para traer la magia de nuestros sabores a tu mesa.</p>
+                <!-- Aquí se podrían añadir fotos y descripciones de miembros clave del equipo -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>PASTELERIA EL CUMGRI</h3>
+                <p>Rellenos con amor "Secretos de Bolivia"</p>
+                <p>Llevamos los auténticos sabores bolivianos a tu mesa con productos artesanales de la más alta calidad.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Enlaces Rápidos</h3>
+                <p><a href="index.html">Inicio</a></p>
+                <p><a href="productos.html">Productos</a></p>
+                <p><a href="nosotros.html">Nosotros</a></p>
+                <p><a href="blogs.html">Blogs</a></p>
+                <p><a href="contacto.html">Contacto</a></p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Categorías</h3>
+                <p><a href="productos.html?categoria=Tortas Cuadradas">Tortas Cuadradas</a></p>
+                <p><a href="productos.html?categoria=Tortas Circulares">Tortas Circulares</a></p>
+                <p><a href="productos.html?categoria=Postres Individuales">Postres Individuales</a></p>
+                <p><a href="productos.html?categoria=Productos Veganos">Productos Veganos</a></p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <p>📧 info@pasteleriaelcumgri.cl</p>
+                <p>📞 +56 9 1234 5678</p>
+                <p>📍 Santiago, Chile</p>
+                <p>🕒 Lun-Dom: 8:00 - 20:00</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2024 PASTELERIA EL CUMGRI. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Carrito de Compras (Sidebar) -->
+    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>Carrito de Compras</h3>
+            <button class="cart-close" onclick="toggleCart()">×</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <!-- Los items del carrito se cargarán dinámicamente -->
+        </div>
+        <div class="cart-total">
+            <div class="cart-total-price" id="cartTotal">Total: $0</div>
+            <button class="btn btn-primary" style="width: 100%;" onclick="proceedToCheckout()">
+                Proceder al Pago
+            </button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="data/productos.js"></script>
+    <script src="js/carrito.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            actualizarContadorCarrito();
+        });
+    </script>
+</body>
+</html>
+

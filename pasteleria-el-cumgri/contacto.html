@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto - PASTELERIA EL CUMGRI</title>
+    <meta name="description" content="Contáctanos para cualquier consulta, pedido especial o sugerencia. PASTELERIA EL CUMGRI.">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <a href="index.html" class="logo">
+                <h1>PASTELERIA EL CUMGRI</h1>
+                <span class="logo-subtitle">Rellenos con amor "Secretos de Bolivia"</span>
+            </a>
+            
+            <ul class="nav-menu">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="productos.html">Productos</a></li>
+                <li><a href="nosotros.html">Nosotros</a></li>
+                <li><a href="blogs.html">Blogs</a></li>
+                <li><a href="contacto.html" class="active">Contacto</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <a href="login.html" class="btn btn-secondary">Iniciar Sesión</a>
+                <a href="registro.html" class="btn btn-primary">Registrarse</a>
+                <div class="cart-icon" onclick="toggleCart()">
+                    🛒
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Contenido de la página Contacto -->
+    <section class="section">
+        <div class="form-container">
+            <h1 class="text-center">Contáctanos</h1>
+            <p class="text-center text-secondary">¿Tienes alguna pregunta, sugerencia o pedido especial? ¡Estamos aquí para ayudarte!</p>
+
+            <form id="formularioContacto" onsubmit="return procesarContacto(event)">
+                <div class="form-group">
+                    <label for="nombreContacto">Nombre *</label>
+                    <input type="text" id="nombreContacto" name="nombreContacto" class="form-control" 
+                           placeholder="Tu nombre completo" maxlength="100" 
+                           oninput="validarCampoTiempoReal(this, 'nombreContacto')" required>
+                    <div class="error-message" id="error-nombreContacto"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="emailContacto">Correo Electrónico *</label>
+                    <input type="email" id="emailContacto" name="emailContacto" class="form-control" 
+                           placeholder="tu@email.com" maxlength="100" 
+                           oninput="validarCampoTiempoReal(this, 'emailContacto')" required>
+                    <div class="error-message" id="error-emailContacto"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="asuntoContacto">Asunto *</label>
+                    <input type="text" id="asuntoContacto" name="asuntoContacto" class="form-control" 
+                           placeholder="Ej: Pedido especial, Consulta, Sugerencia" maxlength="150" 
+                           oninput="validarCampoTiempoReal(this, 'asuntoContacto')" required>
+                    <div class="error-message" id="error-asuntoContacto"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="mensajeContacto">Mensaje *</label>
+                    <textarea id="mensajeContacto" name="mensajeContacto" class="form-control" 
+                              placeholder="Escribe tu mensaje aquí..." rows="5" maxlength="500" 
+                              oninput="validarCampoTiempoReal(this, 'mensajeContacto')" required></textarea>
+                    <div class="error-message" id="error-mensajeContacto"></div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary btn-grande">
+                        Enviar Mensaje
+                    </button>
+                </div>
+            </form>
+
+            <div class="contact-info text-center mt-4">
+                <h2>Nuestra Información de Contacto</h2>
+                <p>📧 <strong>Correo Electrónico:</strong> info@pasteleriaelcumgri.cl</p>
+                <p>📞 <strong>Teléfono:</strong> +56 9 1234 5678</p>
+                <p>📍 <strong>Dirección:</strong> Calle Ficticia #123, Santiago, Chile</p>
+                <p>🕒 <strong>Horario de Atención:</strong> Lunes a Domingo, de 8:00 a 20:00 hrs.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>PASTELERIA EL CUMGRI</h3>
+                <p>Rellenos con amor "Secretos de Bolivia"</p>
+                <p>Llevamos los auténticos sabores bolivianos a tu mesa con productos artesanales de la más alta calidad.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Enlaces Rápidos</h3>
+                <p><a href="index.html">Inicio</a></p>
+                <p><a href="productos.html">Productos</a></p>
+                <p><a href="nosotros.html">Nosotros</a></p>
+                <p><a href="blogs.html">Blogs</a></p>
+                <p><a href="contacto.html">Contacto</a></p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Categorías</h3>
+                <p><a href="productos.html?categoria=Tortas Cuadradas">Tortas Cuadradas</a></p>
+                <p><a href="productos.html?categoria=Tortas Circulares">Tortas Circulares</a></p>
+                <p><a href="productos.html?categoria=Postres Individuales">Postres Individuales</a></p>
+                <p><a href="productos.html?categoria=Productos Veganos">Productos Veganos</a></p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <p>📧 info@pasteleriaelcumgri.cl</p>
+                <p>📞 +56 9 1234 5678</p>
+                <p>📍 Santiago, Chile</p>
+                <p>🕒 Lun-Dom: 8:00 - 20:00</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2024 PASTELERIA EL CUMGRI. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Carrito de Compras (Sidebar) -->
+    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>Carrito de Compras</h3>
+            <button class="cart-close" onclick="toggleCart()">×</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <!-- Los items del carrito se cargarán dinámicamente -->
+        </div>
+        <div class="cart-total">
+            <div class="cart-total-price" id="cartTotal">Total: $0</div>
+            <button class="btn btn-primary" style="width: 100%;" onclick="proceedToCheckout()">
+                Proceder al Pago
+            </button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="data/productos.js"></script>
+    <script src="js/carrito.js"></script>
+    <script src="js/validaciones.js"></script>
+    <script src="js/main.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            actualizarContadorCarrito();
+        });
+
+        function procesarContacto(event) {
+            event.preventDefault();
+            
+            if (!validarFormularioContacto()) {
+                mostrarMensajeError('Por favor corrige los errores en el formulario');
+                return false;
+            }
+
+            const nombre = document.getElementById('nombreContacto').value;
+            const email = document.getElementById('emailContacto').value;
+            const asunto = document.getElementById('asuntoContacto').value;
+            const mensaje = document.getElementById('mensajeContacto').value;
+
+            // Simular envío de mensaje (en una aplicación real, esto se enviaría al servidor)
+            console.log('Mensaje de contacto enviado:', { nombre, email, asunto, mensaje });
+            mostrarMensajeExito('¡Gracias por tu mensaje! Nos pondremos en contacto contigo pronto.');
+            
+            // Limpiar formulario
+            document.getElementById('formularioContacto').reset();
+            return true;
+        }
+
+        function validarFormularioContacto() {
+            let esValido = true;
+            esValido = validarCampo('nombreContacto', 'nombreContacto') && esValido;
+            esValido = validarCampo('emailContacto', 'emailContacto') && esValido;
+            esValido = validarCampo('asuntoContacto', 'asuntoContacto') && esValido;
+            esValido = validarCampo('mensajeContacto', 'mensajeContacto') && esValido;
+            return esValido;
+        }
+    </script>
+</body>
+</html>
+

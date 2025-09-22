@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blogs - PASTELERIA EL CUMGRI</title>
+    <meta name="description" content="Descubre las últimas noticias, recetas y secretos de la repostería boliviana en el blog de PASTELERIA EL CUMGRI.">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <a href="index.html" class="logo">
+                <h1>PASTELERIA EL CUMGRI</h1>
+                <span class="logo-subtitle">Rellenos con amor "Secretos de Bolivia"</span>
+            </a>
+            
+            <ul class="nav-menu">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="productos.html">Productos</a></li>
+                <li><a href="nosotros.html">Nosotros</a></li>
+                <li><a href="blogs.html" class="active">Blogs</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <a href="login.html" class="btn btn-secondary">Iniciar Sesión</a>
+                <a href="registro.html" class="btn btn-primary">Registrarse</a>
+                <div class="cart-icon" onclick="toggleCart()">
+                    🛒
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Contenido de la página Blogs -->
+    <section class="section">
+        <div class="container">
+            <h1 class="text-center">Nuestro Blog: Dulces Historias y Secretos Bolivianos</h1>
+            <p class="text-center text-secondary">Explora artículos sobre repostería, cultura, recetas y mucho más.</p>
+
+            <div class="blog-grid">
+                <!-- Artículo 1 -->
+                <article class="blog-post">
+                    <img src="images/torta-chocolate.jpg" alt="La Historia del Majablanco">
+                    <div class="post-content">
+                        <h2>La Historia Secreta del Majablanco Boliviano</h2>
+                        <p class="post-meta">Publicado el 15 de Agosto, 2025 por Chef Ana</p>
+                        <p>Descubre los orígenes y la evolución de uno de los postres más emblemáticos de Bolivia. Una delicia cremosa que evoca recuerdos de hogar...</p>
+                        <a href="#" class="btn btn-secondary btn-sm">Leer Más</a>
+                    </div>
+                </article>
+
+                <!-- Artículo 2 -->
+                <article class="blog-post">
+                    <img src="images/mousse-chocolate.jpg" alt="5 Postres Bolivianos que Debes Probar">
+                    <div class="post-content">
+                        <h2>5 Postres Bolivianos que Debes Probar Antes de Morir</h2>
+                        <p class="post-meta">Publicado el 10 de Agosto, 2025 por Equipo El Cumgri</p>
+                        <p>Desde el tradicional pastel de choclo hasta el exótico cuñapé, te llevamos en un viaje culinario por los sabores más auténticos de Bolivia...</p>
+                        <a href="#" class="btn btn-secondary btn-sm">Leer Más</a>
+                    </div>
+                </article>
+
+                <!-- Artículo 3 -->
+                <article class="blog-post">
+                    <img src="images/tiramisu.jpg" alt="El Arte de Decorar Tortas">
+                    <div class="post-content">
+                        <h2>El Arte de Decorar Tortas: Técnicas y Tendencias</h2>
+                        <p class="post-meta">Publicado el 01 de Agosto, 2025 por Diseñador Pastelero</p>
+                        <p>Aprende los secretos para transformar una simple torta en una obra de arte. Desde glaseados perfectos hasta figuras de azúcar...</p>
+                        <a href="#" class="btn btn-secondary btn-sm">Leer Más</a>
+                    </div>
+                </article>
+
+                <!-- Artículo 4 -->
+                <article class="blog-post">
+                    <img src="images/torta-cumpleanos.jpg" alt="Ingredientes Esenciales de la Repostería Boliviana">
+                    <div class="post-content">
+                        <h2>Ingredientes Esenciales de la Repostería Boliviana</h2>
+                        <p class="post-meta">Publicado el 25 de Julio, 2025 por Chef Ana</p>
+                        <p>Un recorrido por los ingredientes clave que dan vida a nuestros postres, desde la quinua hasta el singani...</p>
+                        <a href="#" class="btn btn-secondary btn-sm">Leer Más</a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>PASTELERIA EL CUMGRI</h3>
+                <p>Rellenos con amor "Secretos de Bolivia"</p>
+                <p>Llevamos los auténticos sabores bolivianos a tu mesa con productos artesanales de la más alta calidad.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Enlaces Rápidos</h3>
+                <p><a href="index.html">Inicio</a></p>
+                <p><a href="productos.html">Productos</a></p>
+                <p><a href="nosotros.html">Nosotros</a></p>
+                <p><a href="blogs.html">Blogs</a></p>
+                <p><a href="contacto.html">Contacto</a></p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Categorías</h3>
+                <p><a href="productos.html?categoria=Tortas Cuadradas">Tortas Cuadradas</a></p>
+                <p><a href="productos.html?categoria=Tortas Circulares">Tortas Circulares</a></p>
+                <p><a href="productos.html?categoria=Postres Individuales">Postres Individuales</a></p>
+                <p><a href="productos.html?categoria=Productos Veganos">Productos Veganos</a></p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <p>📧 info@pasteleriaelcumgri.cl</p>
+                <p>📞 +56 9 1234 5678</p>
+                <p>📍 Santiago, Chile</p>
+                <p>🕒 Lun-Dom: 8:00 - 20:00</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2024 PASTELERIA EL CUMGRI. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Carrito de Compras (Sidebar) -->
+    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>Carrito de Compras</h3>
+            <button class="cart-close" onclick="toggleCart()">×</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <!-- Los items del carrito se cargarán dinámicamente -->
+        </div>
+        <div class="cart-total">
+            <div class="cart-total-price" id="cartTotal">Total: $0</div>
+            <button class="btn btn-primary" style="width: 100%;" onclick="proceedToCheckout()">
+                Proceder al Pago
+            </button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="data/productos.js"></script>
+    <script src="js/carrito.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            actualizarContadorCarrito();
+        });
+    </script>
+</body>
+</html>
+
